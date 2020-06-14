@@ -10,16 +10,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+            theme: ThemeData(
+        brightness: Brightness.dark,
+        accentColor: Colors.deepOrangeAccent,
+      ),
       home: Scaffold(
           body: Container(
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                child: Text("hello"),
-              ),
+                child: CustomPaint(
+               painter: ShapesPainter(),
+              child: Container(
+              height: 700,
+            
+                child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                  Image.asset('assets/images/logo.png',scale: 0.75),
               Padding(
                 padding: EdgeInsets.all(10),
               ),
@@ -32,15 +39,19 @@ class MyApp extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
               ),
+               
+              
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 25.0),
+                  SizedBox(),
                   GoogleSignInButton(
+                    
                     onPressed: () {},
                     darkMode: true,
                   ),
+                  new Container(height: 25,),
                   MicrosoftSignInButton(
                     onPressed: () {},
                   ),
@@ -49,7 +60,25 @@ class MyApp extends StatelessWidget {
             ],
           ),
         ),
-      )),
-    );
+      )))));
+    
   }
+}
+
+class ShapesPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint();
+    paint.color = Color(0xff253036);
+    var rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    canvas.drawRect(rect, paint);
+    paint.color = Color(0xff29363f);
+    var path = Path();
+    path.lineTo(0, size.height);
+    path.lineTo(size.width, 0);
+    path.close();
+    canvas.drawPath(path, paint);
+  }
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
